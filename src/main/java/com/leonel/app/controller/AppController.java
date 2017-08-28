@@ -24,7 +24,7 @@ import com.leonel.app.service.NoteService;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/customers")
+@RequestMapping("/app")
 public class AppController {
  
     public static final Logger logger = LoggerFactory.getLogger(AppController.class);
@@ -110,7 +110,6 @@ public class AppController {
         Customer c = customerService.findById(id);
         note.setCustomer(c);
         c.getNotes().add(note);
-        c.setName("Teste");
         customerService.save(c);
         noteService.save(note);
  

@@ -56,7 +56,7 @@ public class AppController {
         return new ResponseEntity<Customer>(customer, HttpStatus.OK);
     }
     
-    @RequestMapping(value = "/customers/", method = RequestMethod.POST)
+    @RequestMapping(value = "/customers", method = RequestMethod.POST)
     public ResponseEntity<?> createCustomer(@RequestBody Customer customer, UriComponentsBuilder ucBuilder) {
         logger.info("Creating Customer : {}", customer);
  
@@ -103,7 +103,7 @@ public class AppController {
         return new ResponseEntity<List<Note>>(customer.getNotes(), HttpStatus.OK);
     }
     
-    @RequestMapping(value = "/customers/{id}/notes/", method = RequestMethod.POST)
+    @RequestMapping(value = "/customers/{id}/notes", method = RequestMethod.POST)
     public ResponseEntity<?> createNote(@PathVariable("id") Long id, @RequestBody Note note, UriComponentsBuilder ucBuilder) {
         logger.info("Creating Note : {}", note);
  
@@ -114,7 +114,7 @@ public class AppController {
         noteService.save(note);
  
         HttpHeaders headers = new HttpHeaders();
-        headers.setLocation(ucBuilder.path("/customers/{id}/notes/").buildAndExpand(c.getId()).toUri());
+        headers.setLocation(ucBuilder.path("/customers/{id}/notes").buildAndExpand(c.getId()).toUri());
         return new ResponseEntity<String>(headers, HttpStatus.CREATED);
     }
 

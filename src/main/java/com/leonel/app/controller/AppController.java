@@ -117,5 +117,25 @@ public class AppController {
         headers.setLocation(ucBuilder.path("/customers/{id}/notes").buildAndExpand(c.getId()).toUri());
         return new ResponseEntity<String>(headers, HttpStatus.CREATED);
     }
+    
+    @RequestMapping(value = "/customers/{id}/notes/{id}", method = RequestMethod.PUT)
+    public ResponseEntity<?> updateNotes(@PathVariable("id") Long id, @RequestBody Note note, UriComponentsBuilder ucBuilder) {
+        logger.info("Updating Note with id {}", id);
+ 
+        Note currentNote = noteService.findById(id);
+ 
+        if (currentNote == null) {
+            logger.error("Unable to update. Note with id {} not found.", id);
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
+ 
+        currentNote.setComment(note.getComment());
+
+ 
+        noteService.save(currentNote);
+        
+
+        return new ResponseEntity<String>(HttpStatus.OK);
+    }
 
 }
